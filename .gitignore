@@ -1,0 +1,7 @@
+openai-config.json
+venv/
+__pycache__/
+
+# Emacs/Vim files
+\#*\#
+*~
