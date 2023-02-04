@@ -2,10 +2,13 @@ import os
 import openai
 import json
 
+from tempfile import NamedTemporaryFile
+import pandoc
+
 # The @dataclass annotiation defines __init__ for simple classes.
 from dataclasses import dataclass, field
 from datetime import date
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
 
 from flaskr.latex_beamer import LatexBeamer;
 
@@ -16,7 +19,7 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
-        OPENAI_TEST_DATA=False,
+        OPENAI_TEST_DATA=True,
         OPENAI_API_KEY='SECRET',
     )
     app.config.from_file('openai-config.json', load=json.load)
@@ -149,10 +152,17 @@ def create_app(test_config=None):
         for slide in slides:
             latex.addSlide(slide.title, slide.items)
         latex.endBody()
-        file = latex.endDoc()
+        latexFileName = latex.endDoc()
         app.logger.debug("Temporary file: ")
-        app.logger.debug(file)
-        return slides
+        app.logger.debug(latexFileName)
+
+        # Convert the temporary file into powerpoint.
+        doc = pandoc.read(file=latexFileName, format="latex")
+        tempFile = NamedTemporaryFile(suffix=".pptx", mode="wt", encoding="utf-8", delete=False)
+        tempFile.close()
+        pandoc.write(doc, file=tempFile.name, format="pptx")
+
+        return send_file(tempFile.name, mimetype='application/vnd.openxmlformats-officedocument.presentationml.presentation')
 
     # a simple page that says hello
     @app.route('/hello')
