@@ -30,3 +30,14 @@
 `flask --app flaskr --debug run`
 
 3. Visit the server at http://127.0.0.1:5000/
+
+## Deployment on AWS
+
+The deployment of this app is based on
+[AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/) and follows the
+method outlined in the
+[online tutorial](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-flask.html).
+
+1. Install the AWS Elastic Beanstalk command-line tool following these instructions:
+   https://github.com/aws/aws-elastic-beanstalk-cli-setup
+2. Configure the `eb` tool for your AWS account.

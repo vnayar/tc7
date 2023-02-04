@@ -1,0 +1,15 @@
+[Unit]
+Description=TC7 demo service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=ubuntu
+WorkingDirectory=/home/ubuntu/tc7
+ExecStart=/bin/bash /home/ubuntu/tc7/systemd/start.sh
+
+[Install]
+WantedBy=multi-user.target

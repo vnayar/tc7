@@ -1,7 +1,12 @@
 openai-config.json
 venv/
 __pycache__/
+pitchary.pem
 
 # Emacs/Vim files
 \#*\#
 *~
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
