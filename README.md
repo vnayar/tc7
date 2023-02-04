@@ -14,7 +14,7 @@
 
 5. Obtain an API Key from OpenAI: https://platform.openai.com/account/api-keys
 
-6. Put your API key into the file `instance/openai-config.json`
+6. Put your API key into the file `instance/openai-config.json`.
 
 ## Local Setup
 

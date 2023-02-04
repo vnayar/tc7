@@ -12,14 +12,28 @@
 <form method="post" class="pure-form pure-form-stacked">
   <label for="logo">Logo:</label>
   <input name="logo" type="file"></input>
-  <label for="name">Company name</label>
-  <input name="name" type="text" placeholder="MyCompany"></input>
-  <label for="mission">Company mission</label>
-  <textarea name="mission" rows="3"></textarea>
-  <label for="description">Company description</label>
-  <textarea name="description" rows="3"></textarea>
-  <label for="features">Key benefits / features</label>
-  <textarea name="features" rows="3"></textarea>
+
+  <label for="name">Company Name</label>
+  <input name="name" type="text" required="true" placeholder="MyCompany"></input>
+
+  <label for="vision">The Vision</label>
+  <input name="vision" type="text" required="true" placeholder="To book rooms with locals, rather than hotels."></input>
+
+  <label for="problem">What is the problem your business addresses?</label>
+  <textarea name="problem" rows="2" cols="80" required="true" placeholder="Price is an important concern for customers booking travel online. Hotels leave you disconnected from the city and its culture. No easy way exists to book a room with a local or become a host."></textarea>
+
+  <label for="solution">What product is your business building?</label>
+  <textarea name="solution" rows="2" cols="80" required="true" placeholder="A web platform where users can rent out their space to host travelers to: save money, make money, and share culture."></textarea>
+
+  <label for="advantage">What are your company's competitive advantages?</label>
+  <textarea name="advantage" rows="2" cols="80" placeholder="We are the 1st solution in the market. Hosts make more money. Users can browse host profiles."></textarea>
+
+  <label for="market">What is known about the market?</label>
+  <textarea name="market" rows="2" cols="80" placeholder="There are over 2 billion trips booked worldwide. Of those, 560M are budget trips and online. Capturing 15% of the market would be 84M trips"></textarea>
+
+  <label for="team">Who are the team members?</label>
+  <textarea name="team" rows="2" cols="80" placeholder="Joe Gebbia, User Interface & PR. Brian Chesky, Business Development & Brand. Nathan Blecharcyk, Developer."></textarea>
+
   <button type="submit" class="pure-button pure-button-primary">Abracadabra</button>
 </form>
 </body>
