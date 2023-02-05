@@ -1,9 +1,13 @@
 import os
+import io
 import openai
 import json
 
-from tempfile import NamedTemporaryFile
 import pandoc
+from pdflatex import PDFLaTeX
+
+from tempfile import NamedTemporaryFile, gettempdir
+from werkzeug.utils import secure_filename
 
 # The @dataclass annotiation defines __init__ for simple classes.
 from dataclasses import dataclass, field
@@ -51,8 +55,7 @@ def create_app(test_config=None):
     # Accept the submitted form and generate a presentation.
     @app.route('/', methods=['POST'])
     def postHome():
-        app.logger.debug("Received request: ", request.form.to_dict)
-        
+        app.logger.debug("Received request.form: ", request.form.to_dict)
         gptService = GptService(app.config)
 
         myPrompt = gptService.buildPitchDeckPrompt(
@@ -67,24 +70,51 @@ def create_app(test_config=None):
 
         completion = gptService.createCompletion(myPrompt)
 
+        # Extract the logo from the form and make it available.
+        # https://flask.palletsprojects.com/en/2.2.x/patterns/fileuploads/
+        logoFileName = ''
+        print('LogoCheck 1:')
+        if 'logo' in request.files:
+            print('LogoCheck 2:')
+            logoFile = request.files['logo']
+            # If the user does not select a file, the browser submits an
+            # empty file without a filename.
+            if logoFile.filename != '':
+                print('LogoCheck 3:')
+                filename = secure_filename(logoFile.filename)
+                logoFileName = os.path.join(gettempdir(), filename)
+                logoFile.save(logoFileName)
+        print('LogoCheck 4:')
+
         # Use GPT's output to create our slides and pitch deck.
         pitchDeck = PitchDeck(
-            title=request.form['name'],
-            subtitle=request.form['vision'],
-            date=date.today(),
-            slides=parseSlides(completion.choices[0].text))
+            title = request.form['name'],
+            subtitle = request.form['vision'],
+            date = date.today(),
+            logoFileName = logoFileName,
+            slides = parseSlides(completion.choices[0].text))
 
         # Write the slide data into a new LaTeX document in beamer syntax.
         latexFile = createPitchDeckLatexFile(pitchDeck)
 
-        # Convert the temporary file into powerpoint.
-        # TODO: Use the existing file rather than re-opening it to read it.
-        doc = pandoc.read(file=latexFile.name, format="latex")
-        tempFile = NamedTemporaryFile(suffix=".pptx", mode="wt", encoding="utf-8", delete=False)
-        tempFile.close()
-        pandoc.write(doc, file=tempFile.name, format="pptx")
-
-        return send_file(tempFile.name, mimetype='application/vnd.openxmlformats-officedocument.presentationml.presentation')
+        if request.form['format'] == 'pptx':
+            # TODO: Pandoc currently does NOT preserve icons, pictures, or other graphics.
+            #       Find a replacement or some other mechanism to convert from LaTeX to PPTX.
+            # Convert the temporary file into powerpoint.
+            # TODO: Use the existing file rather than re-opening it to read it.
+            doc = pandoc.read(file=latexFile.name, format="latex")
+            tempFile = NamedTemporaryFile(suffix=".pptx", mode="wt", encoding="utf-8", delete=False)
+            tempFile.close()
+            pandoc.write(doc, file=tempFile.name, format="pptx")
+            return send_file(tempFile.name, mimetype='application/vnd.openxmlformats-officedocument.presentationml.presentation')
+        elif request.form['format'] == 'pdf':
+            # Convert the temporary file into a PDF.
+            # See: https://pypi.org/project/pdflatex/
+            pdfl = PDFLaTeX.from_texfile(latexFile.name)
+            pdf, log, completed_process = pdfl.create_pdf(keep_pdf_file=True, keep_log_file=True)
+            return send_file(io.BytesIO(pdf), download_name=pitchDeck.title + '.pdf', mimetype='application/pdf')
+        else:
+            return 'oops'
 
     # a simple page that says hello
     @app.route('/hello')

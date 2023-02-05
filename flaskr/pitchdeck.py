@@ -40,5 +40,6 @@ class PitchDeck:
     title: str
     subtitle: str
     date: str
+    logoFileName: str
     slides: list[Slide] = field(default_factory=list)
 

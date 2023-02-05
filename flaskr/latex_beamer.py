@@ -23,11 +23,12 @@ class LatexBeamer:
     """
     def writePreamble(
             self,
-            title: str = "",
-            subtitle: str = "",
-            author: str = "",
-            institute: str = "",
-            date: str = "") -> None:
+            title: str = '',
+            subtitle: str = '',
+            author: str = '',
+            institute: str = '',
+            date: str = '',
+            logoFileName: str = '') -> None:
         if title:
             self.file.write("\\title{{{}}}\n".format(self.latexEscape(title)))
         if subtitle:
@@ -38,6 +39,9 @@ class LatexBeamer:
             self.file.write("\\institute{{{}}}\n".format(self.latexEscape(institute)))
         if date:
             self.file.write("\\date{{{}}}\n".format(date))
+        if logoFileName:
+            self.file.write("\\logo{{\\includegraphics[height=1cm]{{{}}}}}\n".format(logoFileName))
+
         self.file.write("\\usetheme{Madrid}\n\n")
 
     def startBody(self) -> None:
@@ -73,7 +77,8 @@ def createPitchDeckLatexFile(pitchDeck: PitchDeck) -> any:
     latex.writePreamble(
         title=pitchDeck.title,
         subtitle=pitchDeck.subtitle,
-        date=pitchDeck.date)
+        date=pitchDeck.date,
+        logoFileName=pitchDeck.logoFileName)
     latex.startBody()
     for slide in pitchDeck.slides:
         latex.addSlide(slide.title, slide.items)

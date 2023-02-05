@@ -35,7 +35,7 @@
 
         <div class="form-content text-align-center ">
 
-          <form method="post" class="pure-form pure-form-stacked">
+          <form method="post" enctype="multipart/form-data" class="pure-form pure-form-stacked">
               <fieldset>
                   <div class="pure-control-group">
                     <label for="logo">Logo</label>
@@ -95,9 +95,17 @@
                         <option>Witty</option>
                         <option>Funny</option>
                       </select>
-
                     </div>
+                  </div>
 
+                  <div class="pure-control-group">
+                    <label for="format">Output Format</label>
+                    <div class="flex-and-center">
+                      <select id="format" name="format">
+                        <option value="pdf" selected>PDF</option>
+                        <option value="pptx">PowerPoint</option>
+                      </select>
+                    </div>
                   </div>
 
                   <div class="pure-control-group flex-and-center">
