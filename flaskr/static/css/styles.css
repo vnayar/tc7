@@ -1,0 +1,67 @@
+/* Container holding the image and the text */
+.container {
+  position: relative;
+  width: 100%;
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+.blue {
+  background-color: rgb(73, 54, 232);
+
+}
+
+.purple {
+  background-color: rgb(130, 100, 255);
+}
+
+.black-background {
+  background-color: #111111;
+}
+
+.white-font {
+  color: white;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.zindex100 {
+  z-index: 100;
+}
+
+.img-size {
+  max-height: 50px;
+}
+
+.bubble-size {
+
+}
+
+.header {
+  width: 100%;
+  margin-top: 50px;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.flex-and-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.width-100 {
+  width: 100%;
+}
+
+.margin-top-10 {
+  margin-top: 10px;
+}
+
+.form-content {
+  width: 40%;
+}
