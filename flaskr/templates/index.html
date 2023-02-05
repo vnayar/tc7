@@ -1,40 +1,94 @@
 <html>
 <head>
-  <title>Pitchary: Create Inspiring Pitch Decks</title>
+  <title>Pitchary: Turn words into compelling presentations.</title>
 
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css"
         integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls"
         crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/grids-responsive-min.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+  <script src="https://kit.fontawesome.com/d35950c7f9.js" crossorigin="anonymous"></script>
+
+  <style>
+
+</style>
 </head>
-<body>
-<h1>Pitchary: Create Inspiring Pitch Decks</h1>
-<form method="post" class="pure-form pure-form-stacked">
-  <label for="logo">Logo:</label>
-  <input name="logo" type="file"></input>
 
-  <label for="name">Company Name</label>
-  <input name="name" type="text" required="true" placeholder="MyCompany"></input>
+<body class="black-background white-font">
+  <div class="container">
+    <img class="pure-img absolute bubble-size" src="{{ url_for('static', filename='images/blue_circle.png') }}">
 
-  <label for="vision">The Vision</label>
-  <input name="vision" type="text" required="true" placeholder="To book rooms with locals, rather than hotels."></input>
+    <div class="header absolute">
+      <div class="header-content text-align-center ">
+        <img class="img-size" src="{{ url_for('static', filename='images/icon.png') }}">
+          <h1>Pitchary</h1>
+          <h2>Turn words into compelling presentations.</h2>
+      </div>
+      <div class="form-wrapper flex-and-center">
 
-  <label for="problem">What is the problem your business addresses?</label>
-  <textarea name="problem" rows="2" cols="80" required="true" placeholder="Price is an important concern for customers booking travel online. Hotels leave you disconnected from the city and its culture. No easy way exists to book a room with a local or become a host."></textarea>
+        <div class="form-content text-align-center ">
 
-  <label for="solution">What product is your business building?</label>
-  <textarea name="solution" rows="2" cols="80" required="true" placeholder="A web platform where users can rent out their space to host travelers to: save money, make money, and share culture."></textarea>
+          <form method="post" class="pure-form pure-form-stacked">
+              <fieldset>
+                  <div class="pure-control-group">
+                    <label for="stacked-logo">Logo</label>
+                    <div class="flex-and-center ">
+                      <input class="width-100" name="logo" type="file" place></input>
+                    </div>
+                  </div>
 
-  <label for="advantage">What are your company's competitive advantages?</label>
-  <textarea name="advantage" rows="2" cols="80" placeholder="We are the 1st solution in the market. Hosts make more money. Users can browse host profiles."></textarea>
+                  <div class="pure-control-group">
+                    <label for="stacked-name margin-top-10">Company name</label>
+                    <input id="stacked-name" class="width-100" name="name" type="text" placeholder=""></input>
+                  </div>
 
-  <label for="market">What is known about the market?</label>
-  <textarea name="market" rows="2" cols="80" placeholder="There are over 2 billion trips booked worldwide. Of those, 560M are budget trips and online. Capturing 15% of the market would be 84M trips"></textarea>
+                  <div class="pure-control-group">
+                    <label for="stacked-mission">Company mission</label>
+                    <textarea id="stacked-mission" class="width-100" name="mission" rows="3"></textarea>
+                  </div>
 
-  <label for="team">Who are the team members?</label>
-  <textarea name="team" rows="2" cols="80" placeholder="Joe Gebbia, User Interface & PR. Brian Chesky, Business Development & Brand. Nathan Blecharcyk, Developer."></textarea>
+                  <div class="pure-control-group">
+                    <label for="stacked-description">Company description</label>
+                    <textarea id="stacked-description" class="width-100" name="description" rows="3"></textarea>
+                  </div>
 
-  <button type="submit" class="pure-button pure-button-primary">Abracadabra</button>
-</form>
+                  <div class="pure-control-group">
+                    <label for="stacked-features">Key benefits / features</label>
+                    <textarea id="stacked-features" class="width-100" name="features" rows="3"></textarea>
+                  </div>
+
+                  <div class="pure-control-group">
+                    <label for="stacked-features">Tone of voice</label>
+                    <div class="flex-and-center">
+                      <select id="stacked-state">
+                        <option>Serious</option>
+                        <option>Convincing</option>
+                        <option>Witty</option>
+                        <option>Funny</option>
+                      </select>
+
+                    </div>
+
+                  </div>
+
+                  <div class="pure-control-group flex-and-center">
+                    <button type="submit" class="pure-button pure-button-primary blue margin-top-10">Abracadabra</button>
+                  </div>
+              </form>
+            </div>
+          </div>
+
+          </div>
+
+      </div>
+
 </body>
 </html>
+
