@@ -94,7 +94,7 @@ def create_app(test_config=None):
         i = 0
         for slide in slides:
             i = i + 1
-            if i mod 2 == 0:
+            if i % 2 == 0:
                 continue
             imagePrompt = ' '.join(slide.items)
             image = gptService.createImage(imagePrompt)
