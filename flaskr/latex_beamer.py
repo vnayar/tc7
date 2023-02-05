@@ -1,6 +1,8 @@
 import re
 from tempfile import NamedTemporaryFile
 
+from .pitchdeck import PitchDeck
+
 class LatexBeamer:
     """Accumulated text used to write a LaTeX beamer file."""
     file : NamedTemporaryFile = None
@@ -61,7 +63,21 @@ class LatexBeamer:
         self.file.close()
         print("LatexBeamer.endDoc 1:")
         print(self.file)
-        return self.file.name
+        return self.file
         
-        
-        
+"""Returns a file-object associated with a temporary LaTeX file representing the PitchDeck."""
+def createPitchDeckLatexFile(pitchDeck: PitchDeck) -> any:
+    # Write the slide data into a new LaTeX document in beamer syntax.
+    latex = LatexBeamer()
+    latex.startDoc()
+    latex.writePreamble(
+        title=pitchDeck.title,
+        subtitle=pitchDeck.subtitle,
+        date=pitchDeck.date)
+    latex.startBody()
+    for slide in pitchDeck.slides:
+        latex.addSlide(slide.title, slide.items)
+    latex.endBody()
+    latexFile = latex.endDoc()
+    print("Creating LaTeX file: ", latexFile.name)
+    return latexFile
