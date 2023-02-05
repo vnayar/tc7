@@ -53,21 +53,22 @@ class LatexBeamer:
         self.file.write("\\begin{frame}\n")
         self.file.write("\\frametitle{{{}}}\n".format(self.latexEscape(title)))
 
-        self.file.write("\\begin{columns}\n")
+        if imageFileName:
+            self.file.write("\\begin{columns}\n")
+            self.file.write("\\begin{column}{0.5\\textwidth}\n")
+            self.file.write("  \\centering\n")
+            self.file.write("    \\includegraphics[width=4cm]{{{}}}\n".format(self.latexEscape(imageFileName)))
+            self.file.write("\\end{column}\n")
+            self.file.write("\\begin{column}{0.5\\textwidth}\n")
 
-        self.file.write("\\begin{column}{0.5\\textwidth}\n")
-        self.file.write("  \\centering\n")
-        self.file.write("    \\includegraphics[width=4cm]{{{}}}\n".format(self.latexEscape(imageFileName)))
-        self.file.write("\\end{column}\n")
-
-        self.file.write("\\begin{column}{0.5\\textwidth}\n")
         self.file.write("\\begin{itemize}\n")
         for item in items:
             self.file.write("\item {}".format(self.latexEscape(item)) + "\n")
         self.file.write("\\end{itemize}\n")
-        self.file.write("\\end{column}\n")
 
-        self.file.write("\\end{columns}\n")
+        if imageFileName:
+            self.file.write("\\end{column}\n")
+            self.file.write("\\end{columns}\n")
 
         self.file.write("\\end{frame}\n")
 

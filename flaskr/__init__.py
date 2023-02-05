@@ -91,7 +91,11 @@ def create_app(test_config=None):
         slides = parseSlides(completion.choices[0].text)
 
         # Supplement a few slides with images.
+        i = 0
         for slide in slides:
+            i = i + 1
+            if i mod 2 == 0:
+                continue
             imagePrompt = ' '.join(slide.items)
             image = gptService.createImage(imagePrompt)
             req = requests.get(image.data[0].url, allow_redirects=True)
