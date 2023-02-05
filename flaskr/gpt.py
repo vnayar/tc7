@@ -1,5 +1,6 @@
 import openai
 from openai.api_resources.completion import Completion
+from openai.api_resources.image import Image
 from flask.config import Config
 
 """Manages a connection to OpenAI's GPT and issues text prediction prompts."""
@@ -110,4 +111,14 @@ class GptService:
             )
 
     
-
+    """Uses the OpenAI API to generate an image representing a given prompt."""
+    def createImage(self, prompt: str) -> Image:
+        image = openai.Image.create(
+            prompt=prompt,
+            n=1,
+            size="512x512",
+            response_format="url",
+        )
+        print("Received image: ")
+        print(image)
+        return image

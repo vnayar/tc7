@@ -2,6 +2,7 @@ import os
 import io
 import openai
 import json
+import requests
 
 import pandoc
 from pdflatex import PDFLaTeX
@@ -86,13 +87,25 @@ def create_app(test_config=None):
                 logoFile.save(logoFileName)
         print('LogoCheck 4:')
 
-        # Use GPT's output to create our slides and pitch deck.
+        # Use GPT's output to create our slides.
+        slides = parseSlides(completion.choices[0].text)
+
+        # Supplement a few slides with images.
+        for slide in slides:
+            imagePrompt = ' '.join(slide.items)
+            image = gptService.createImage(imagePrompt)
+            req = requests.get(image.data[0].url, allow_redirects=True)
+            imageFile = NamedTemporaryFile(suffix=".png", mode="wb", delete=False)
+            imageFile.write(req.content)
+            imageFile.close()
+            slide.imageFileName = imageFile.name
+
         pitchDeck = PitchDeck(
             title = request.form['name'],
             subtitle = request.form['vision'],
             date = date.today(),
             logoFileName = logoFileName,
-            slides = parseSlides(completion.choices[0].text))
+            slides = slides)
 
         # Write the slide data into a new LaTeX document in beamer syntax.
         latexFile = createPitchDeckLatexFile(pitchDeck)

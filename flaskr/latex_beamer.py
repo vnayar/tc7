@@ -49,13 +49,26 @@ class LatexBeamer:
         # Define the title page as the first slide.
         self.file.write("\\frame{\\titlepage}\n\n")
 
-    def addSlide(self, title: str, items: list[str]) -> None:
+    def addSlide(self, title: str, items: list[str], imageFileName: str = '') -> None:
         self.file.write("\\begin{frame}\n")
         self.file.write("\\frametitle{{{}}}\n".format(self.latexEscape(title)))
+
+        self.file.write("\\begin{columns}\n")
+
+        self.file.write("\\begin{column}{0.5\\textwidth}\n")
+        self.file.write("  \\centering\n")
+        self.file.write("    \\includegraphics[width=4cm]{{{}}}\n".format(self.latexEscape(imageFileName)))
+        self.file.write("\\end{column}\n")
+
+        self.file.write("\\begin{column}{0.5\\textwidth}\n")
         self.file.write("\\begin{itemize}\n")
         for item in items:
             self.file.write("\item {}".format(self.latexEscape(item)) + "\n")
         self.file.write("\\end{itemize}\n")
+        self.file.write("\\end{column}\n")
+
+        self.file.write("\\end{columns}\n")
+
         self.file.write("\\end{frame}\n")
 
     def endBody(self) -> None:
@@ -81,7 +94,7 @@ def createPitchDeckLatexFile(pitchDeck: PitchDeck) -> any:
         logoFileName=pitchDeck.logoFileName)
     latex.startBody()
     for slide in pitchDeck.slides:
-        latex.addSlide(slide.title, slide.items)
+        latex.addSlide(slide.title, slide.items, slide.imageFileName)
     latex.endBody()
     latexFile = latex.endDoc()
     print("Creating LaTeX file: ", latexFile.name)

@@ -8,6 +8,8 @@ class Slide:
     title: str
     """A list of bullet points in the slide."""
     items: list[str] = field(default_factory=list)
+    """An optional image for the slide."""
+    imageFileName: str = ''
 
 
 """
